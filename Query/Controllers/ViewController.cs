@@ -1,9 +1,8 @@
 ﻿using MassTransit;
 using MassTransit.Mediator;
 using MassTransitShared;
-using Microsoft.AspNetCore.Http;
+using MediatorTest1.Consumers;
 using Microsoft.AspNetCore.Mvc;
-using NTS.Demands.CoreAPI.Application.Features.Rules.Quares;
 
 namespace Query.Controllers
 {
@@ -18,12 +17,15 @@ namespace Query.Controllers
             _mediator = mediator;
             _bus = bus;
         }
-        [HttpGet]
+        [HttpGet("GetView")]
         public async Task<IActionResult> GetView()
         {
-            //int num = 7;
-
-            return Ok(await _mediator.send/*<GetAllRulesQuery, string2>*/(new GetAllRulesQuery() { number = "7" }, _bus));
+            return Ok(await _mediator.send<GetAllRulesQuery, string2>(new GetAllRulesQuery() { number = "7" }, _bus));
+        }
+        [HttpGet("GetViewLocal")]
+        public async Task<IActionResult> GetViewLocal()
+        {
+            return Ok(await _mediator.send<GetQuery, string3>(new GetQuery() { number = "5" }, _bus));
         }
     }
 }

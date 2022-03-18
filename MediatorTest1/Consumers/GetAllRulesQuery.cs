@@ -1,9 +1,7 @@
 ﻿using MassTransit;
 using MassTransitShared;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace NTS.Demands.CoreAPI.Application.Features.Rules.Quares
+namespace MediatorTest1.Consumers
 {
     public class string2
     {
@@ -20,7 +18,7 @@ namespace NTS.Demands.CoreAPI.Application.Features.Rules.Quares
         public async Task Consume(ConsumeContext<GetAllRulesQuery> context)
         {
             var query = context.Message;
-            context.Respond<string2>(new string2() { core = query.number });
+            context.Respond(new string2() { core = query.number });
         }
     }
 }
