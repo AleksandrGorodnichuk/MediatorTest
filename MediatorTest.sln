@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediatorTest1", "MediatorTest1\MediatorTest1.csproj", "{4B4EDAF4-351B-405E-A4DE-94FBC22EBD78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediatorTest1", "MediatorTest1\MediatorTest1.csproj", "{4B4EDAF4-351B-405E-A4DE-94FBC22EBD78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Query", "Query\Query.csproj", "{9A6BEDA6-715B-41CF-BDD8-DC661D07E818}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Query", "Query\Query.csproj", "{9A6BEDA6-715B-41CF-BDD8-DC661D07E818}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransitShared", "MassTransit\MassTransitShared.csproj", "{E8F14C0E-A715-4141-B351-0C0632EBB6EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransitShared", "MassTransit\MassTransitShared.csproj", "{E8F14C0E-A715-4141-B351-0C0632EBB6EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,6 +3,7 @@ using MassTransit.Mediator;
 using MassTransitShared;
 using MediatorTest1.Consumers;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace Query.Controllers
 {
@@ -20,12 +21,12 @@ namespace Query.Controllers
         [HttpGet("GetView")]
         public async Task<IActionResult> GetView()
         {
-            return Ok(await _mediator.send<GetAllRulesQuery, string2>(new GetAllRulesQuery() { number = "7" }, _bus));
+            return Ok(await _mediator.send<GetAllRulesQuery, string2>(new GetAllRulesQuery() { number = "7" }, Assembly.GetExecutingAssembly(), _bus));
         }
         [HttpGet("GetViewLocal")]
         public async Task<IActionResult> GetViewLocal()
         {
-            return Ok(await _mediator.send<GetQuery, string3>(new GetQuery() { number = "5" }, _bus));
+            return Ok(await _mediator.send<GetQuery, string3>(new GetQuery() { number = "5" }, Assembly.GetExecutingAssembly(), _bus));
         }
     }
 }
