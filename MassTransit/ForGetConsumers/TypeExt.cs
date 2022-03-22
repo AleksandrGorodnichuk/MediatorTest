@@ -1,10 +1,6 @@
 ﻿using MassTransit.Util;
 using System.Reflection;
-using MassTransit.Metadata;
-using MassTransit.JobService;
 using MassTransit;
-using MassTransit.MessageData;
-using System.Linq;
 using MassTransit.Internals;
 
 namespace MassTransitShared.ForGetConsumers
@@ -20,7 +16,8 @@ namespace MassTransitShared.ForGetConsumers
             if (assemblies.Length == 0)
                 assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            var types = AssemblyTypeCache.FindTypes(assemblies, IsConsumerOrDefinition).GetAwaiter().GetResult();
+            var types1 = AssemblyTypeCache.FindTypes(assemblies, IsConsumerOrDefinition).GetAwaiter().GetResult();
+            var types = types1.FindTypes(TypeClassification.Concrete | TypeClassification.Closed).ToArray();
             IEnumerable<Type> consumerTypes = types.Where(MessageTypeCache.HasConsumerInterfaces);
             IEnumerable<Type> consumerDefinitionTypes = types.Where(x => x.HasInterface(typeof(IConsumerDefinition<>)));
 
@@ -42,7 +39,7 @@ namespace MassTransitShared.ForGetConsumers
             Type[] interfaces = type.GetTypeInfo().GetInterfaces();
 
             return interfaces.Any(t => InterfaceExtensions.HasInterface(t, typeof(MassTransit.IConsumer<>))
-                || InterfaceExtensions.HasInterface(t, typeof(MassTransit.IJobConsumer<>))
+                || InterfaceExtensions.HasInterface(t, typeof(IJobConsumer<>))
                 || InterfaceExtensions.HasInterface(t, typeof(IConsumerDefinition<>)));
         }
     }

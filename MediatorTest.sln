@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediatorTest1", "MediatorTest1\MediatorTest1.csproj", "{4B4EDAF4-351B-405E-A4DE-94FBC22EBD78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediatorTest", "MediatorTest1\MediatorTest.csproj", "{4B4EDAF4-351B-405E-A4DE-94FBC22EBD78}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Query", "Query\Query.csproj", "{9A6BEDA6-715B-41CF-BDD8-DC661D07E818}"
 EndProject
