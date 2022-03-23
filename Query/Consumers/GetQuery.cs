@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace Query.Consumers
 {
-    public class string3
-    {
-        public string core { get; set; }
-    }
-    public class GetQuery : IRequest<string3>
-    {
-        public string number { get; set; }
-    }
+    //public class string3
+    //{
+    //    public string core { get; set; }
+    //}
+    //public class GetQuery : IRequest<string3>
+    //{
+    //    public string number { get; set; }
+    //}
 
     public class GetHandler : IConsumer<GetQuery>
     {
