@@ -1,4 +1,6 @@
 using MassTransit;
+using MassTransit.Mediator;
+using MassTransitShared;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,7 @@ builder.Services.AddMediator(c =>
 {
     c.AddConsumers(Assembly.GetExecutingAssembly());
 });
+builder.Services.AddTransient<IMediator, MediatorCustom>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
