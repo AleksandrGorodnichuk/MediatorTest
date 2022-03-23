@@ -27,7 +27,8 @@ builder.Services.AddMediator(c =>
 {
     c.AddConsumers(Assembly.GetExecutingAssembly());
 });
-builder.Services.AddTransient<IMediator, MediatorCustom>();
+builder.Services.AddSingleton<TypesDictionary>(x => new TypesDictionary(Assembly.GetExecutingAssembly()));
+builder.Services.AddScoped<MediatorAdapter>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

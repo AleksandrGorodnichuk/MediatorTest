@@ -6,30 +6,23 @@ using System.Reflection;
 
 namespace MassTransitShared
 {
-    public static class MediatorAdapter
+    public class MediatorAdapter
     {
-        public static async Task<TResponse> send<TRequest, TResponse>(this IMediator mediator, TRequest request, Assembly assembly, IBus bus = null) where TRequest : class, IRequest<TResponse> where TResponse: class
-        //public static async Task<TResponse> send<TResponse>(this IMediator mediator, IRequest<TResponse> request, IBus bus = null) where TResponse : class
+        private readonly IMediator _mediator;
+        private readonly IBus _bus;
+        private readonly TypesDictionary _typesDictionary;
+        public MediatorAdapter(IMediator mediator, IBus bus, TypesDictionary typesDictionary)
         {
-            /*var consumers = TypeExt.GetConsumers(null, assembly);
-            List<Type> querys = new List<Type>();
-            foreach (var consumer in consumers)
-            {
-               querys.Add(consumer.GetInterface(nameof(IConsumer)+"`1").GetGenericArguments()[0]);
-            }
-            if (querys.Contains(typeof(TRequest)))*/
-            /*{ */
-                var hendler = mediator.CreateRequestClient<TRequest>();
-                var response = await hendler.GetResponse<TResponse>(request);
-                return response.Message;
-            /*}
-            else 
-            {
-                var client = bus.CreateRequestClient<TRequest>();
-                var demandsTask = await client.GetResponse<TResponse>(request);
-                return demandsTask.Message;
-            }*/
-            
+            _mediator = mediator;
+            _bus = bus;
+            _typesDictionary = typesDictionary;
+        }        
+        public async Task<TResponse> send<TRequest, TResponse>(TRequest request) where TRequest : class where TResponse: class
+        {
+
+            var client = _typesDictionary.Types.Values.Contains(typeof(TRequest)) ? _mediator.CreateRequestClient<TRequest>() : _bus.CreateRequestClient<TRequest>();
+            var response = await client.GetResponse<TResponse>(request);
+            return response.Message;
         }
     }
 }

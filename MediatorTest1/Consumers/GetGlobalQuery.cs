@@ -1,21 +1,20 @@
 ﻿using MassTransit;
 using MassTransitShared;
 
-namespace MediatorTest1.Consumers
+namespace MediatorTest.Consumers
 {
     public class string2
     {
         public string core { get; set; }
     }
-    public class GetAllRulesQuery : IRequest<string2>
+    public class GetGlobalQuery : IRequest<string2>
     {
         public string number { get; set; }
     }
 
-    public class GetAllRulesHandler : IConsumer<GetAllRulesQuery>
-    {
-       
-        public async Task Consume(ConsumeContext<GetAllRulesQuery> context)
+    public class GetGlobalHandler : IConsumer<GetGlobalQuery>
+    {   
+        public async Task Consume(ConsumeContext<GetGlobalQuery> context)
         {
             var query = context.Message;
             context.Respond(new string2() { core = query.number });

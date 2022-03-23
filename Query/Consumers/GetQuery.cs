@@ -3,7 +3,7 @@ using MassTransitShared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Query
+namespace Query.Consumers
 {
     public class string3
     {
@@ -16,7 +16,6 @@ namespace Query
 
     public class GetHandler : IConsumer<GetQuery>
     {
-
         public async Task Consume(ConsumeContext<GetQuery> context)
         {
             var query = context.Message;
