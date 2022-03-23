@@ -21,7 +21,7 @@ namespace Query.Controllers
         [HttpGet("GetView")]
         public async Task<IActionResult> GetView()
         {
-            return Ok(await _mediator.send<GetAllRulesQuery, string2>(new GetAllRulesQuery() { number = "7" }, Assembly.GetExecutingAssembly(), _bus));
+            return Ok(await MediatorAdapter.send<GetAllRulesQuery, string2>(null, new GetAllRulesQuery() { number = "7" }, Assembly.GetExecutingAssembly(), _bus));
         }
         [HttpGet("GetViewLocal")]
         public async Task<IActionResult> GetViewLocal()
