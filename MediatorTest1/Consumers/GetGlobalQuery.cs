@@ -17,7 +17,7 @@ namespace MediatorTest.Consumers
         public async Task Consume(ConsumeContext<GetGlobalQuery> context)
         {
             var query = context.Message;
-            context.Respond(new string2() { core = query.number });
+            context.Respond(new string2() { core = query.number + Random.Shared.NextDouble().ToString() });
         }
     }
 }

@@ -2,7 +2,7 @@
 using MassTransitShared.ForGetConsumers;
 using System.Reflection;
 
-namespace MassTransitShared
+namespace MassTransitShared.ForGetConsumers
 {
     public class TypesDictionary
     {
@@ -11,7 +11,7 @@ namespace MassTransitShared
         {
             Types = new Dictionary<Type, Type>();
             foreach (var consumer in TypeExt.GetConsumers(assembly))
-                Types[consumer] = consumer.GetInterface(nameof(IConsumer) + "`1").GetGenericArguments()[0];
+                Types[consumer] = consumer.GetInterface(typeof(IConsumer<>).FullName).GetGenericArguments()[0];
         }
     }
 }

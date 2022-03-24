@@ -16,12 +16,12 @@ namespace Query.Controllers
         [HttpGet("GetView")]
         public async Task<IActionResult> GetView()
         {
-            return Ok(await MediatorAdapter.send(new GetGlobalQuery() { number = "7" }));
+            return Ok(await MediatorAdapter.send(new GetGlobalQuery() { number = "7" + Random.Shared.NextDouble().ToString() }));
         }
         [HttpGet("GetViewLocal")]
         public async Task<IActionResult> GetViewLocal()
         {
-            return Ok(await MediatorAdapter.send(new GetQuery() { number = "5" }));
+            return Ok(await MediatorAdapter.send(new GetQuery() { number = "5"+Random.Shared.NextDouble().ToString() }));
         }
     }
 }

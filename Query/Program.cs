@@ -1,6 +1,6 @@
 using MassTransit;
-using MassTransit.Mediator;
 using MassTransitShared;
+using MassTransitShared.ForGetConsumers;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using MassTransit.Clients;
 using MassTransit.Mediator;
+using MassTransitShared.ForGetConsumers;
 using System.Reflection;
 
 namespace MassTransitShared
@@ -18,31 +18,21 @@ namespace MassTransitShared
         }        
         public async Task<TResponse> send<TResponse>(IRequest<TResponse> request)  where TResponse: class
         {
-            IRequestClient<IRequest<TResponse>> client = default;
-            if (_typesDictionary.Types.Values.Contains(request.GetType()))
+            if (_typesDictionary.Types.ContainsValue(request.GetType()))
             {
-                Type type = typeof(IClientFactory);
-                var ss = type.GetMethods();
-                MethodInfo createClient = ss[9];
-                MethodInfo createClientGen = createClient.MakeGenericMethod(request.GetType());
+                var handler = _mediator.CreateRequest(request);
+                var response = await handler.GetResponse<TResponse>();
+                return response.Message;
 
-                var client2 = createClientGen.Invoke(_mediator, new object[] { default(RequestTimeout) });
-
-                var method = client2.GetType().GetMethods()[2];
-                method = method.MakeGenericMethod(typeof(TResponse));
-                var task = (Task)method.Invoke(client2, new object[] { request, default(CancellationToken), default(RequestTimeout) });
-                await task.ConfigureAwait(false);
-
-                var resultProperty = task.GetType().GetProperty("Result");
-                return resultProperty.GetValue(task) as TResponse;
             }
             else
             {
-                MethodInfo createClient = typeof(ClientFactoryExtensions).GetMethod(nameof(ClientFactoryExtensions.CreateRequestClient)).MakeGenericMethod(request.GetType());
-                client = createClient.Invoke(_bus, null) as IRequestClient<IRequest<TResponse>>;
+                MethodInfo createRequestClient = typeof(ClientFactoryExtensions).GetMethod(nameof(ClientFactoryExtensions.CreateRequestClient), new Type[] { typeof(IBus), typeof(RequestTimeout) }).MakeGenericMethod(request.GetType());
+                dynamic client = createRequestClient.Invoke(null, new object[] { _bus, default(RequestTimeout) });
+                Response<TResponse> response = await client.GetResponse<TResponse>(request, default(CancellationToken), default(RequestTimeout));
+                return response.Message; 
             }
-            var response = await client.GetResponse<TResponse>(request);
-            return response.Message;
+            
         }
     }
 }

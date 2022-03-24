@@ -13,13 +13,4 @@ namespace MassTransitShared
     {
         public string number { get; set; }
     }
-
-    //public class GetHandler : IConsumer<GetQuery>
-    //{
-    //    public async Task Consume(ConsumeContext<GetQuery> context)
-    //    {
-    //        var query = context.Message;
-    //        context.Respond(new string3() { core = query.number });
-    //    }
-    //}
 }
