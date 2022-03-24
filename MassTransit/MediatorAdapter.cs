@@ -25,12 +25,16 @@ namespace MassTransitShared
                 var ss = type.GetMethods();
                 MethodInfo createClient = ss[9];
                 MethodInfo createClientGen = createClient.MakeGenericMethod(request.GetType());
-                var client2 = (createClientGen.Invoke(_mediator, new object[] { default(RequestTimeout) }));
-                bool bool12 = IRequestClient<string> is IRequestClient<object>; = true
-                IRequestClient<string> : RequestClient<object>
-                    bool bool21 = string is object; RequestClient<object>= true
-                //var client3 = (RequestClient<object>)client2;
-                //Type sssss = client2.GetType(); 
+
+                var client2 = createClientGen.Invoke(_mediator, new object[] { default(RequestTimeout) });
+
+                var method = client2.GetType().GetMethods()[2];
+                method = method.MakeGenericMethod(typeof(TResponse));
+                var task = (Task)method.Invoke(client2, new object[] { request, default(CancellationToken), default(RequestTimeout) });
+                await task.ConfigureAwait(false);
+
+                var resultProperty = task.GetType().GetProperty("Result");
+                return resultProperty.GetValue(task) as TResponse;
             }
             else
             {
